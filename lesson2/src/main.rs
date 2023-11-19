@@ -24,8 +24,7 @@ fn bin_search(arr: &[i32], desired_value: i32) -> Option<(i32, usize)> {
         let mid = (up_bound + low_bound) / 2;
 
         let mid_value = arr[mid];
-        println!("{mid_value}");
-        println!("{mid}");
+
         match mid_value.cmp(&desired_value) {
             Ordering::Equal => return Some((mid_value, mid)),
             Ordering::Greater => {

@@ -1,5 +1,4 @@
 use crate::prelude::*;
-use rand::Rng;
 use random_number::RandomNumber;
 
 mod random_number;

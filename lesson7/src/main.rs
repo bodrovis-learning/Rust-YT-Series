@@ -7,6 +7,7 @@ mod prelude {
     pub const HIGH: u8 = 150;
     pub use crate::generator::{generate, other_fn};
     pub use std::env as environment;
+    pub use rand::Rng;
 }
 
 use prelude::*;

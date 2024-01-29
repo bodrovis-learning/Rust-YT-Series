@@ -3,7 +3,7 @@ fn main() {
     println!("{output_string}");
 }
 
-fn str_data() -> &'static str {
+fn str_data<'a>() -> &'a str {
     "Hello, world!"
 }
 
@@ -45,7 +45,11 @@ mod tests {
     #[test]
     #[ignore]
     fn it_returns_str() {
-        assert_eq!(str_data(), "Hello", "Invalid string has been returned!")
+        assert_eq!(
+            str_data(),
+            "Hello, world!",
+            "Invalid string has been returned!"
+        )
     }
 
     #[test]

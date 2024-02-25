@@ -1,8 +1,7 @@
 #![warn(clippy::all, clippy::pedantic)]
 
-use std::rc::Rc;
-// Interior mutability
 use std::cell::RefCell;
+use std::rc::Rc; // Interior mutability
 
 #[derive(Clone)]
 struct Cat {
@@ -11,45 +10,28 @@ struct Cat {
     parent: Option<Rc<RefCell<Cat>>>,
 }
 
+// reference counting -- Rc
+
 fn main() {
     let cat_elder = Rc::new(RefCell::new(Cat {
-        name: "Matron".to_string(),
-        age: 15,
+        name: String::from("Elder Cat"),
+        age: 16,
         parent: None,
     }));
 
-    println!(
-        "count after creating elder = {}",
-        Rc::strong_count(&cat_elder)
-    );
-
-    let mother = Rc::new(RefCell::new(Cat {
-        name: "Mother".to_string(),
-        age: 5,
+    let cat_parent = Rc::new(RefCell::new(Cat {
+        name: String::from("Parent Cat"),
+        age: 6,
         parent: Some(Rc::clone(&cat_elder)),
     }));
 
-    println!(
-        "count after creating elder = {}",
-        Rc::strong_count(&cat_elder)
-    );
-
-    let buttons = Rc::new(RefCell::new(Cat {
-        name: "Mr. Buttons".to_string(),
-        age: 2,
-        parent: Some(Rc::clone(&mother)),
+    let cat = Rc::new(RefCell::new(Cat {
+        name: String::from("Mr. Buttons"),
+        age: 3,
+        parent: Some(Rc::clone(&cat_parent)),
     }));
 
-    mother.borrow_mut().age = 6;
-    buttons.borrow_mut().parent = Some(Rc::clone(&cat_elder));
-
-    println!(
-        "{} is {} years old",
-        mother.borrow().name,
-        mother.borrow().age
-    );
-
-    parents_iterate(&buttons);
+    parents_iterate(&cat);
 }
 
 fn parents_iterate(child: &Rc<RefCell<Cat>>) {
@@ -57,7 +39,6 @@ fn parents_iterate(child: &Rc<RefCell<Cat>>) {
 
     while let Some(current_cat) = current.take() {
         let current_cat_ref = current_cat.borrow();
-
         println!(
             "Getting cat named {}, age {}",
             current_cat_ref.name, current_cat_ref.age

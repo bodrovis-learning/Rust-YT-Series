@@ -32,6 +32,10 @@ fn main() {
     }));
 
     parents_iterate(&cat);
+    let a = Box::new(4);
+    let b = a.as_ref();
+    let c = Box::new(5);
+    let d = b + c.as_ref();
 }
 
 fn parents_iterate(child: &Rc<RefCell<Cat>>) {

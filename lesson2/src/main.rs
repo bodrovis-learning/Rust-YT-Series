@@ -14,6 +14,10 @@ fn main() {
 }
 
 fn bin_search(arr: &[i32], desired_value: i32) -> Option<(i32, usize)> {
+    if arr.is_empty() {
+        return None;
+    }
+    
     let mut low_bound: usize = 0;
     let mut up_bound: usize = arr.len() - 1;
     let mut i: usize = 0;
@@ -68,6 +72,12 @@ mod tests {
     fn smallest_element_not_found() {
         let result = bin_search(&ARR, -100);
 
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn empty_array() {
+        let result: Option<(i32, usize)> = bin_search(&[], -2);
         assert!(result.is_none());
     }
 }
